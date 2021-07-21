@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+        <h2>Blog Details</h2><hr>
+        <h6 class="fst-italic">{{ post.title }} <small>posted by</small> {{ post.author }}<br></h6>
+        <p class="fs-4 fst-italic">{{ post.body }}</p><br><br>
+        <span class="badge bg-light text-dark">{{total_likes}}Likes</span>
+        <hr>
+
+        {% if user.is_authenticated %}
+
+            <form action="{% url 'like_post' post.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary"> <i class="far fa-thumbs-up "></i>Like</button><br>
+            </form>
+
+            {% if user.id == post.author.id %}
+                <br><h5><a href="{% url 'update_details' post.pk %}"><button class="btn btn-outline-success btn-sm">Edit</button></a> /
+                <a href="{% url 'delete_post' post.pk %}"><button class="btn btn-outline-danger btn-sm">Delete</button></a> this post.</h5>
+            {% else %}
+                <br>Please,Login as <b>{{post.author}}</b> to update the blog.<br>
+            {% endif %}
+
+        {% endif %}
+        <br>
+        <a href="{% url 'home' %}"><button class="btn btn-dark">Back to Homepage</button></a>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <br>Hello <b>{{user.username}}</b>, Welcome back .<br>
+    {% endif %}
+
+    <br>
+    <h2><i><u>Blogs</u></i></h2>
+    <br>
+    <ul>
+    {% for post in object_list %}
+        <li> <b>{{ post.title }} - {{ post.author }}</b><br>
+                <a href="{% url 'article_details' post.pk %}"><button class="btn btn-outline-success btn-sm">View Blog</button></a>
+            </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
+
